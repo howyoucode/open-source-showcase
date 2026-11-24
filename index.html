@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090b16" />
+    <title>Skill Mosaic</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <a class="brand" href="#" aria-label="Skill Mosaic home">
+          <span class="brand-mark" aria-hidden="true">SM</span>
+          <span>Skill Mosaic</span>
+        </a>
+        <button id="share-button" class="button secondary" type="button">Copy profile</button>
+      </header>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">CREATIVE SKILL CONSTELLATIONS</p>
+          <h1>Where your abilities<br /><em>meet new ideas.</em></h1>
+        </div>
+        <p class="intro">Map what you know, discover unexpected combinations, and turn your skills into a project you can start today.</p>
+      </section>
+
+      <section class="workspace" aria-label="Skill profile builder">
+        <aside class="panel controls">
+          <div class="panel-heading">
+            <h2>Your skills</h2>
+            <span id="skill-count" class="count">0</span>
+          </div>
+
+          <form id="skill-form">
+            <label for="skill-name">Skill name</label>
+            <input id="skill-name" name="skill" maxlength="24" placeholder="e.g. Design" required />
+
+            <div class="form-row">
+              <div>
+                <label for="skill-category">Category</label>
+                <select id="skill-category" name="category">
+                  <option value="Creative">Creative</option>
+                  <option value="Technical">Technical</option>
+                  <option value="Human">Human</option>
+                  <option value="Strategy">Strategy</option>
+                </select>
+              </div>
+              <div>
+                <label for="skill-level">Level</label>
+                <select id="skill-level" name="level">
+                  <option value="3">Advanced</option>
+                  <option value="2" selected>Growing</option>
+                  <option value="1">Exploring</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="button primary" type="submit">Add to constellation <span aria-hidden="true">+</span></button>
+          </form>
+
+          <div class="legend" aria-label="Category legend">
+            <span><i class="creative"></i>Creative</span>
+            <span><i class="technical"></i>Technical</span>
+            <span><i class="human"></i>Human</span>
+            <span><i class="strategy"></i>Strategy</span>
+          </div>
+        </aside>
+
+        <div class="panel constellation" id="constellation" aria-live="polite">
+          <canvas id="mosaic-canvas" aria-label="Skill constellation"></canvas>
+        </div>
+      </section>
+
+      <section class="idea-section">
+        <div>
+          <p class="eyebrow">COMBINATION LAB</p>
+          <h2>Make an unexpected project.</h2>
+        </div>
+        <button id="generate-button" class="button primary" type="button">Generate idea <span aria-hidden="true">↗</span></button>
+      </section>
+
+      <article id="idea-card" class="idea-card" hidden>
+        <span id="idea-kicker">A NEW PROJECT</span>
+        <h3 id="idea-title"></h3>
+        <p id="idea-description"></p>
+        <div id="idea-skills" class="idea-skills"></div>
+      </article>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
