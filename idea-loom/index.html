@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Idea Loom - Mind Map Studio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Idea Loom home">
+        <span class="brand-mark">IL</span>
+        <span>Idea Loom</span>
+      </a>
+      <div class="toolbar" aria-label="Export tools">
+        <button id="undo-button" class="icon-button" type="button" title="Undo" aria-label="Undo">↶</button>
+        <button id="redo-button" class="icon-button" type="button" title="Redo" aria-label="Redo">↷</button>
+        <span class="divider"></span>
+        <button id="export-button" class="button dark" type="button">Export <span>↗</span></button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="prompt-panel">
+        <p class="eyebrow">IDEA INPUT</p>
+        <h1>Describe it.<br /><em>Map it.</em></h1>
+        <p class="subtitle">Turn a complex idea into a clear, visual structure.</p>
+
+        <label for="idea-input">Your idea</label>
+        <textarea id="idea-input" rows="9" placeholder="Example: Design a neighborhood platform that helps residents share tools, organize events, and reduce waste..."></textarea>
+
+        <div class="prompt-options">
+          <button class="option active" type="button" data-depth="balanced">Balanced</button>
+          <button class="option" type="button" data-depth="detailed">Detailed</button>
+        </div>
+
+        <button id="generate-button" class="button generate" type="button">
+          Generate mind map
+          <span aria-hidden="true">✦</span>
+        </button>
+      </aside>
+
+      <section class="canvas-shell">
+        <div class="canvas-header">
+          <div>
+            <span class="status-dot"></span>
+            <strong id="map-title">Untitled mind map</strong>
+          </div>
+          <div class="zoom-controls" aria-label="Zoom controls">
+            <button id="zoom-out" type="button" aria-label="Zoom out">−</button>
+            <span id="zoom-label">100%</span>
+            <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
+            <button id="fit-button" type="button" aria-label="Fit map">Fit</button>
+          </div>
+        </div>
+
+        <div id="canvas" class="canvas" aria-label="Mind map canvas">
+          <svg id="connections" aria-hidden="true"></svg>
+          <div id="nodes" class="nodes"></div>
+          <div id="empty-state" class="empty-state">
+            <div class="empty-orbit"><span>✦</span></div>
+            <h2>Your idea starts here</h2>
+            <p>Describe a concept on the left to create its first map.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="export-dialog">
+      <form method="dialog">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">EXPORT</p>
+            <h2>Move your map</h2>
+          </div>
+          <button class="close-button" value="cancel" aria-label="Close">×</button>
+        </div>
+        <div class="export-grid">
+          <button type="button" class="export-card" data-format="figma">
+            <strong>Figma MCP</strong>
+            <span>Copy a structured frame payload</span>
+          </button>
+          <button type="button" class="export-card" data-format="svg">
+            <strong>SVG</strong>
+            <span>Download a scalable image</span>
+          </button>
+          <button type="button" class="export-card" data-format="json">
+            <strong>JSON</strong>
+            <span>Save the complete map data</span>
+          </button>
+          <button type="button" class="export-card" data-format="mermaid">
+            <strong>Mermaid</strong>
+            <span>Copy diagram source</span>
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

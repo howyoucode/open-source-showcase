@@ -1,0 +1,8 @@
+{
+  "name": "idea-loom",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}
