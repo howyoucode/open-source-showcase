@@ -33,3 +33,11 @@ npm test
 The app does not invoke Figma directly because no Figma MCP connection is configured in this environment. Choose **Export > Figma MCP**, then paste the copied JSON payload into a Figma MCP-compatible create-frame tool.
 
 The payload includes the frame name, dimensions, background color, node labels, positions, dimensions, and fill colors. It is intentionally tool-neutral so it can be mapped to a Figma MCP implementation.
+
+## Before and after
+
+![Idea Loom before](screenshots/idea-loom-before.png)
+
+![Idea Loom after](screenshots/idea-loom-after.png)
+
+The updated interface uses shared rem tokens and translucent materials. Mind-map nodes and the canvas use Pointer Events, capture, grab offsets, a 10px drag threshold, momentum projection, and interruptible springs.

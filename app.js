@@ -1,3 +1,5 @@
+import { Spring, project, rubberband } from "./shared/design-system/spring.js";
+
 const COLORS = {
   Creative: "#ff775f",
   Technical: "#66b9bd",
@@ -40,6 +42,8 @@ if (typeof document !== "undefined") {
   const canvas = document.querySelector("#mosaic-canvas");
   const ctx = canvas.getContext("2d");
   let skills = loadSkills();
+    let drag = null;
+    let nodePositions = new Map();
 
   function loadSkills() {
     const shared = new URLSearchParams(location.search).get("skills");
@@ -109,9 +113,12 @@ if (typeof document !== "undefined") {
     skills.forEach((skill, index) => {
       const angle = (index / skills.length) * Math.PI * 2 - Math.PI / 2;
       const orbit = Math.min(rect.width, rect.height) * (0.22 + (skill.level || 2) * 0.035);
-      const x = centerX + Math.cos(angle) * orbit;
-      const y = centerY + Math.sin(angle) * orbit;
+      const key = skill.name;
+      const live = nodePositions.get(key);
+      const x = live?.x ?? centerX + Math.cos(angle) * orbit;
+      const y = live?.y ?? centerY + Math.sin(angle) * orbit;
       const radius = 16 + (skill.level || 2) * 4;
+      if (!live) nodePositions.set(key, { x, y });
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, Math.PI * 2);
       ctx.fillStyle = COLORS[skill.category] || COLORS.Creative;
@@ -173,4 +180,53 @@ if (typeof document !== "undefined") {
 
   new ResizeObserver(resizeCanvas).observe(canvas);
   saveSkills();
+
+  canvas.addEventListener("pointerdown", (event) => {
+    const rect = canvas.getBoundingClientRect();
+    const point = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+    const hit = [...nodePositions.entries()].find(([, position]) => Math.hypot(position.x - point.x, position.y - point.y) < 28);
+    if (!hit) return;
+    canvas.setPointerCapture(event.pointerId);
+    drag = { name: hit[0], start: point, offset: { x: point.x - hit[1].x, y: point.y - hit[1].y }, history: [{ ...point, time: performance.now() }], active: false };
+  });
+
+  canvas.addEventListener("pointermove", (event) => {
+    if (!drag) return;
+    const rect = canvas.getBoundingClientRect();
+    const point = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+    if (!drag.active && Math.hypot(point.x - drag.start.x, point.y - drag.start.y) < 10) return;
+    drag.active = true;
+    const position = { x: point.x - drag.offset.x, y: point.y - drag.offset.y };
+    nodePositions.set(drag.name, position);
+    drag.history.push({ ...point, time: performance.now() });
+    drag.history = drag.history.slice(-6);
+    draw();
+  });
+
+  canvas.addEventListener("pointerup", (event) => {
+    if (!drag) return;
+    if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+    if (drag.active) {
+      const history = drag.history;
+      const first = history[0];
+      const last = history.at(-1);
+      const vx = ((last.x - first.x) / Math.max(1, last.time - first.time)) * 1000;
+      const vy = ((last.y - first.y) / Math.max(1, last.time - first.time)) * 1000;
+      const position = nodePositions.get(drag.name);
+      const spring = new Spring([position.x, position.y], [position.x, position.y], [vx, vy], "momentum");
+      const nearestX = position.x + project(vx);
+      const nearestY = position.y + project(vy);
+      spring.setTarget([nearestX, nearestY]);
+      let frame;
+      const animate = () => {
+        spring.step(1 / 60);
+        nodePositions.set(drag.name, { x: spring.x, y: spring.y });
+        draw();
+        if (!spring.settled) frame = requestAnimationFrame(animate);
+      };
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(animate);
+    }
+    drag = null;
+  });
 }

@@ -58,6 +58,12 @@ npm test
 
 No Figma MCP server or API credentials are required by this plain-JavaScript project.
 
+## Before and after
+
+![Brand Kit Forge before](screenshots/desktop-before.png)
+
+![Brand Kit Forge after](screenshots/desktop-preview.png)
+
 ## Claude Agent Skill
 
 The valid Claude Agent Skill package is at [`skill/SKILL.md`](skill/SKILL.md). It includes generation instructions, algorithm references, and two complete brand examples.

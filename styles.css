@@ -61,3 +61,16 @@ input:focus, select:focus { border-color: var(--ink); box-shadow: 0 0 0 2px rgba
   .constellation { min-height: 380px; }
   .idea-section { align-items: flex-start; gap: 20px; }
 }
+
+button:active,.chip:active,.preset:active,.tab:active,.option:active {
+  transform: scale(.97);
+  transition: transform 100ms ease-out;
+}
+button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible {
+  outline: .1875rem solid var(--color-primary);
+  outline-offset: .125rem;
+}
+header,.topbar { background: var(--material-thin-bg); backdrop-filter: blur(var(--material-thin-blur)) saturate(180%); }
+.brief-panel,.controls { background: var(--material-regular-bg); }
+.panel,.panel-material { border: 0; box-shadow: var(--shadow-md); }
+dialog,.sheet-material { transform-origin: var(--dialog-origin, center); }

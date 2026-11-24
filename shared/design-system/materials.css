@@ -1,0 +1,18 @@
+.toolbar-material,
+.panel-material,
+.sheet-material {
+  border-top: 1px solid var(--top-edge);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(var(--material-regular-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--material-regular-blur)) saturate(180%);
+  background: var(--material-regular-bg);
+}
+.toolbar-material { background: var(--material-thin-bg); backdrop-filter: blur(var(--material-thin-blur)) saturate(180%); -webkit-backdrop-filter: blur(var(--material-thin-blur)) saturate(180%); }
+.sheet-material { background: var(--material-thick-bg); backdrop-filter: blur(var(--material-thick-blur)) saturate(160%); -webkit-backdrop-filter: blur(var(--material-thick-blur)) saturate(160%); }
+.scroll-edge { mask-image: linear-gradient(to bottom, transparent 0, #000 1rem, #000 calc(100% - 1rem), transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 1rem, #000 calc(100% - 1rem), transparent 100%); }
+.modal-scrim { background: var(--scrim); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.surface-text { color: var(--color-text); font-weight: 680; letter-spacing: .005em; }
+
+@media (prefers-reduced-transparency: reduce) {
+  .toolbar-material,.panel-material,.sheet-material { backdrop-filter: none; -webkit-backdrop-filter: none; }
+}

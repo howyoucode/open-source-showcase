@@ -1,0 +1,82 @@
+:root {
+  color-scheme: light;
+  --color-bg: #f4f1ea;
+  --color-bg-elevated: #fcfaf5;
+  --color-surface: rgba(252,250,245,.82);
+  --color-surface-solid: #fcfaf5;
+  --color-text: #17162d;
+  --color-text-secondary: #5f5d68;
+  --color-primary: #336bff;
+  --color-success: #1f7a4c;
+  --color-warning: #b7791f;
+  --color-error: #b42318;
+  --color-info: #1d64b7;
+  --color-line: rgba(23,22,45,.14);
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 4rem;
+  --radius-sm: .25rem;
+  --radius-md: .75rem;
+  --radius-lg: 1.25rem;
+  --radius-pill: 999rem;
+  --shadow-sm: 0 .125rem .5rem rgba(23,22,45,.08);
+  --shadow-md: 0 .75rem 1.875rem rgba(23,22,45,.12);
+  --shadow-lg: 0 1.5rem 3.75rem rgba(23,22,45,.18);
+  --material-thin-bg: rgba(255,255,255,.62);
+  --material-thin-blur: 10px;
+  --material-thin-opacity: .62;
+  --material-regular-bg: rgba(250,249,245,.78);
+  --material-regular-blur: 20px;
+  --material-regular-opacity: .78;
+  --material-thick-bg: rgba(23,22,45,.82);
+  --material-thick-blur: 34px;
+  --material-thick-opacity: .82;
+  --scrim: rgba(23,22,45,.28);
+  --top-edge: rgba(255,255,255,.52);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --color-bg: #17162d;
+    --color-bg-elevated: #24233b;
+    --color-surface: rgba(36,35,59,.82);
+    --color-surface-solid: #24233b;
+    --color-text: #f8f6ef;
+    --color-text-secondary: #c7c4ce;
+    --color-primary: #76a0ff;
+    --color-line: rgba(248,246,239,.16);
+    --material-thin-bg: rgba(36,35,59,.68);
+    --material-regular-bg: rgba(36,35,59,.82);
+    --material-thick-bg: rgba(11,11,24,.88);
+    --top-edge: rgba(255,255,255,.18);
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --color-surface: var(--color-bg-elevated);
+    --color-surface-solid: var(--color-bg-elevated);
+    --color-line: var(--color-text);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --material-thin-bg: var(--color-bg-elevated);
+    --material-regular-bg: var(--color-bg-elevated);
+    --material-thick-bg: var(--color-bg-elevated);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    button:active,.chip:active,.preset:active,.tab:active,.option:active,.export-card:active {
+      transform: none;
+      transition: opacity 120ms ease;
+    }
+    * { scroll-behavior: auto !important; }
+  }
+}

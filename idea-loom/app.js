@@ -1,4 +1,5 @@
 export const categories = ["Features", "Audience", "Challenge", "Outcomes"];
+import { Spring, project, rubberband } from "../shared/design-system/spring.js";
 
 export function extractTitle(text) {
   const clean = text.trim().replace(/\s+/g, " ");
@@ -98,6 +99,7 @@ let history = [];
 let historyIndex = -1;
 let zoom = 1;
 let depth = "balanced";
+let pan = { x: 0, y: 0 };
 
 function snapshot() {
   history = history.slice(0, historyIndex + 1);
@@ -168,20 +170,42 @@ function startDrag(event) {
   if (event.button !== 0) return;
   const element = event.currentTarget;
   const node = currentMap.nodes.find((item) => item.id === element.dataset.id);
-  element.classList.add("selected");
+  element.setPointerCapture(event.pointerId);
+  const grabOffset = { x: event.clientX - element.getBoundingClientRect().left - element.offsetWidth / 2, y: event.clientY - element.getBoundingClientRect().top - element.offsetHeight / 2 };
+  let history = [{ x: event.clientX, y: event.clientY, time: performance.now() }];
+  let active = false;
   const canvasRect = canvas.getBoundingClientRect();
+  element.classList.add("selected");
   const move = (moveEvent) => {
-    node.x = (moveEvent.clientX - canvasRect.left) / zoom;
-    node.y = (moveEvent.clientY - canvasRect.top) / zoom;
+    const dx = moveEvent.clientX - history[0].x;
+    const dy = moveEvent.clientY - history[0].y;
+    if (!active && Math.hypot(dx, dy) < 10) return;
+    active = true;
+    node.x = (moveEvent.clientX - canvasRect.left - grabOffset.x) / zoom;
+    node.y = (moveEvent.clientY - canvasRect.top - grabOffset.y) / zoom;
+    node.x = Math.max(-rubberband(Math.max(0, -node.x), canvasRect.width), Math.min(canvasRect.width + rubberband(Math.max(0,node.x-canvasRect.width),canvasRect.width),node.x));
+    node.y = Math.max(-rubberband(Math.max(0,-node.y),canvasRect.height),Math.min(canvasRect.height+rubberband(Math.max(0,node.y-canvasRect.height),canvasRect.height),node.y));
+    history.push({ x: moveEvent.clientX, y: moveEvent.clientY, time: performance.now() });
+    history = history.slice(-6);
     render();
   };
   const stop = () => {
-    window.removeEventListener("pointermove", move);
-    window.removeEventListener("pointerup", stop);
+    if (element.hasPointerCapture(event.pointerId)) element.releasePointerCapture(event.pointerId);
+    if (active) {
+      const first = history[0];
+      const last = history.at(-1);
+      const vx = ((last.x-first.x)/Math.max(1,last.time-first.time))*1000;
+      const vy = ((last.y-first.y)/Math.max(1,last.time-first.time))*1000;
+      const spring = new Spring([node.x,node.y],[node.x+project(vx)/zoom,node.y+project(vy)/zoom],[vx/zoom,vy/zoom],"momentum");
+      const animate=()=>{spring.step(1/60);node.x=spring.x;node.y=spring.y;render();if(!spring.settled)requestAnimationFrame(animate)};
+      requestAnimationFrame(animate);
+    }
+    element.removeEventListener("pointermove", move);
+    element.removeEventListener("pointerup", stop);
     snapshot();
   };
-  window.addEventListener("pointermove", move);
-  window.addEventListener("pointerup", stop);
+  element.addEventListener("pointermove", move);
+  element.addEventListener("pointerup", stop);
 }
 
 document.querySelector("#generate-button").addEventListener("click", () => {
@@ -210,7 +234,8 @@ document.querySelector("#zoom-in").addEventListener("click", () => setZoom(Math.
 document.querySelector("#zoom-out").addEventListener("click", () => setZoom(Math.max(0.6, zoom - 0.1)));
 document.querySelector("#fit-button").addEventListener("click", () => setZoom(1));
 function setZoom(value) {
-  zoom = value;
+  const bounded = value < 0.6 ? 0.6 - rubberband(0.6 - value, 300) : value > 1.4 ? 1.4 + rubberband(value - 1.4, 300) : value;
+  zoom = bounded;
   document.querySelector("#zoom-label").textContent = `${Math.round(zoom * 100)}%`;
   render();
 }
@@ -276,4 +301,29 @@ function showToast(message) {
 
 new ResizeObserver(render).observe(canvas);
 render();
+
+canvas.addEventListener("pointerdown",(event)=>{
+  if(event.target !== canvas && event.target !== svg) return;
+  canvas.setPointerCapture(event.pointerId);
+  const start={x:event.clientX,y:event.clientY};
+  const history=[{...start,time:performance.now()}];
+  let active=false;
+  const move=(moveEvent)=>{
+    const dx=moveEvent.clientX-start.x, dy=moveEvent.clientY-start.y;
+    if(!active&&Math.hypot(dx,dy)<10)return;
+    active=true;
+    pan={x:pan.x+dx,y:pan.y+dy};
+    start.x=moveEvent.clientX;start.y=moveEvent.clientY;
+    nodesLayer.style.transform=`translate(${pan.x}px,${pan.y}px)`;
+    svg.style.transform=`translate(${pan.x}px,${pan.y}px)`;
+    history.push({x:moveEvent.clientX,y:moveEvent.clientY,time:performance.now()});
+  };
+  const stop=()=>{
+    if(canvas.hasPointerCapture(event.pointerId))canvas.releasePointerCapture(event.pointerId);
+    canvas.removeEventListener("pointermove",move);
+    canvas.removeEventListener("pointerup",stop);
+  };
+  canvas.addEventListener("pointermove",move);
+  canvas.addEventListener("pointerup",stop);
+});
 }
