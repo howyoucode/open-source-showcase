@@ -1,0 +1,36 @@
+{
+  "brief": {
+    "name": "North & Salt",
+    "industry": "Technology",
+    "market": "Europe",
+    "personality": ["calm", "premium", "precise"],
+    "baseColor": "#336BFF",
+    "mode": "light",
+    "ratio": 1.25
+  },
+  "palette": {
+    "primary": "#336BFF",
+    "secondary": "#7D68DB",
+    "accent": "#F1B95B",
+    "semantic": {
+      "success": "#1F7A4C",
+      "warning": "#B7791F",
+      "error": "#B42318",
+      "info": "#1D64B7"
+    }
+  },
+  "typography": {
+    "heading": "Newsreader",
+    "body": "Source Sans 3",
+    "scale": {"xs":13, "sm":16, "md":20, "lg":25, "xl":31, "xxl":39}
+  },
+  "voice": {
+    "rules": [
+      "Lead with reassurance.",
+      "Use precise, considered language.",
+      "Name facts and outcomes."
+    ],
+    "do": ["Create a calm, specific next step.", "Explain what changes for the customer."],
+    "dont": ["Act now before you miss out!", "Our revolutionary, best-in-class solution."]
+  }
+}

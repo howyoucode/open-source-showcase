@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f1ea" />
+    <title>Brand Kit Forge</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Brand Kit Forge home">
+        <span class="brand-mark">BF</span>
+        <span>Brand Kit Forge</span>
+      </a>
+      <div class="top-actions">
+        <button id="theme-toggle" class="icon-button" type="button" title="Toggle preview theme" aria-label="Toggle preview theme">◐</button>
+        <button id="export-button" class="button dark" type="button">Export kit <span>↗</span></button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="brief-panel">
+        <p class="eyebrow">BRAND BRIEF</p>
+        <h1>Shape a<br /><em>living identity.</em></h1>
+
+        <form id="brief-form" novalidate>
+          <label for="brand-name">Brand name</label>
+          <input id="brand-name" value="North & Salt" maxlength="40" required />
+
+          <div class="form-row">
+            <div>
+              <label for="industry">Industry</label>
+              <select id="industry">
+                <option>Technology</option><option>Wellness</option><option>Finance</option>
+                <option>Food & Hospitality</option><option>Fashion</option><option>Education</option>
+              </select>
+            </div>
+            <div>
+              <label for="market">Target market</label>
+              <select id="market">
+                <option>Europe</option><option>Dubai-GCC</option><option>Japan</option><option>Global</option>
+              </select>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>Personality</legend>
+            <div id="personality-options" class="chips">
+              <button type="button" class="chip active" data-value="calm">Calm</button>
+              <button type="button" class="chip active" data-value="premium">Premium</button>
+              <button type="button" class="chip" data-value="bold">Bold</button>
+              <button type="button" class="chip" data-value="playful">Playful</button>
+              <button type="button" class="chip" data-value="precise">Precise</button>
+              <button type="button" class="chip" data-value="warm">Warm</button>
+            </div>
+          </fieldset>
+
+          <div class="form-row">
+            <div>
+              <label for="base-color">Base color</label>
+              <div class="color-input">
+                <input id="base-color" type="color" value="#336BFF" aria-label="Base color" />
+                <input id="base-hex" value="#336BFF" maxlength="7" aria-label="Base hexadecimal color" />
+              </div>
+            </div>
+            <div>
+              <label for="mode">Preference</label>
+              <select id="mode"><option value="light">Light</option><option value="dark">Dark</option></select>
+            </div>
+          </div>
+
+          <label for="ratio">Type scale ratio</label>
+          <div id="ratio-options" class="ratio-options" aria-label="Type scale ratio">
+            <button type="button" data-ratio="1.2">1.200</button>
+            <button type="button" class="active" data-ratio="1.25">1.250</button>
+            <button type="button" data-ratio="1.333">1.333</button>
+          </div>
+
+          <button id="generate-button" class="button generate" type="submit">Forge brand kit <span>✦</span></button>
+        </form>
+
+        <div class="preset-section">
+          <div class="section-heading"><span>Start from a theme</span><button id="shuffle-button" type="button">Shuffle ↻</button></div>
+          <div id="preset-list" class="preset-list"></div>
+        </div>
+      </aside>
+
+      <section class="preview-panel">
+        <nav class="preview-tabs" aria-label="Preview views">
+          <button class="tab active" type="button" data-view="brand">Brand</button>
+          <button class="tab" type="button" data-view="components">Components</button>
+          <button class="tab" type="button" data-view="guidelines">Guidelines</button>
+          <button class="tab" type="button" data-view="tokens">Tokens</button>
+        </nav>
+
+        <div id="brand-view" class="preview-view active">
+          <div class="mockup-grid">
+            <article class="landing-mockup">
+              <nav><strong id="hero-brand">North &amp; Salt</strong><span>About &nbsp; Work &nbsp; Contact</span></nav>
+              <div class="hero-copy">
+                <span class="mini-label">BUILT WITH INTENTION</span>
+                <h2>Make room for<br />what matters.</h2>
+                <p id="hero-description">A considered identity for modern, purposeful choices.</p>
+                <button type="button" id="hero-button">Explore the brand <b>↗</b></button>
+              </div>
+              <div class="hero-art"><div class="orb"></div><div class="arch"></div></div>
+            </article>
+
+            <article class="mobile-mockup">
+              <div class="phone-bar"><span>9:41</span><span>•••</span></div>
+              <p class="app-kicker">Good morning</p>
+              <h3 id="app-title">Your daily<br />essential.</h3>
+              <div class="app-card"><span>Progress</span><strong>78%</strong><i></i></div>
+              <button type="button">Continue</button>
+              <div class="app-nav"><b>●</b><span>○</span><span>○</span><span>○</span></div>
+            </article>
+
+            <article class="card-mockup">
+              <div class="business-card front"><strong id="card-brand">North &amp; Salt</strong><span>STUDIO / 2026</span></div>
+              <div class="business-card back"><span id="card-role">Creative practice</span><strong>hello@northsalt.co</strong></div>
+            </article>
+
+            <article class="social-mockup">
+              <span id="social-brand">N&S</span>
+              <h3>Quietly<br /><em>remarkable.</em></h3>
+              <small>THE NORTH &amp; SALT STANDARD</small>
+            </article>
+          </div>
+        </div>
+
+        <div id="components-view" class="preview-view">
+          <div class="component-sheet">
+            <div class="sheet-header"><span>COMPONENT SYSTEM</span><strong id="component-brand">North &amp; Salt</strong></div>
+            <div class="component-grid">
+              <section><h3>Buttons</h3><button class="sample primary" type="button">Primary action</button><button class="sample secondary" type="button">Secondary</button></section>
+              <section><h3>Fields</h3><label>Label</label><input value="Your information" /><label>Selected</label><input class="focus" value="hello@brand.co" /></section>
+              <section><h3>Cards</h3><article class="sample-card"><span>01</span><strong>Considered</strong><p>Designed for clarity and purpose.</p></article></section>
+              <section><h3>Semantic</h3><div class="semantics"><span data-semantic="success">Success</span><span data-semantic="warning">Warning</span><span data-semantic="error">Error</span><span data-semantic="info">Info</span></div></section>
+            </div>
+          </div>
+        </div>
+
+        <div id="guidelines-view" class="preview-view">
+          <article class="guidelines-preview">
+            <p class="eyebrow">BRAND GUIDELINES</p>
+            <h2 id="guideline-name">North &amp; Salt</h2>
+            <section><h3>01 — Voice</h3><ul id="voice-list"></ul></section>
+            <section><h3>02 — Palette</h3><div id="guideline-colors" class="guideline-colors"></div></section>
+            <section><h3>03 — Typography</h3><div id="guideline-type"></div></section>
+          </article>
+        </div>
+
+        <div id="tokens-view" class="preview-view">
+          <div class="token-panel">
+            <div class="token-header"><strong>Generated tokens</strong><span id="token-count">0 tokens</span></div>
+            <pre id="token-json"></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="export-dialog">
+      <form method="dialog">
+        <div class="dialog-heading"><div><p class="eyebrow">EXPORT KIT</p><h2>Production-ready assets</h2></div><button class="close-button" value="cancel" aria-label="Close">×</button></div>
+        <div class="export-grid">
+          <button type="button" data-format="css"><strong>CSS variables</strong><span>Custom properties</span></button>
+          <button type="button" data-format="tailwind"><strong>Tailwind config</strong><span>theme.extend</span></button>
+          <button type="button" data-format="dtcg"><strong>DTCG JSON</strong><span>W3C design tokens</span></button>
+          <button type="button" data-format="figma"><strong>Figma / Tokens Studio</strong><span>Variables JSON</span></button>
+          <button type="button" data-format="guidelines"><strong>Brand guidelines</strong><span>Print-ready HTML</span></button>
+          <button type="button" data-format="share"><strong>Share URL</strong><span>Copy encoded brief</span></button>
+        </div>
+      </form>
+    </dialog>
+    <div id="toast" class="toast" role="status"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "brief": {
+    "name": "Sakura Transit",
+    "industry": "Education",
+    "market": "Japan",
+    "personality": ["precise", "calm", "warm"],
+    "baseColor": "#BD3657",
+    "mode": "light",
+    "ratio": 1.2
+  },
+  "palette": {
+    "primary": "#BD3657",
+    "secondary": "#6A7F88",
+    "accent": "#E5B75B",
+    "semantic": {
+      "success": "#1F7A4C",
+      "warning": "#B7791F",
+      "error": "#B42318",
+      "info": "#1D64B7"
+    }
+  },
+  "typography": {
+    "heading": "IBM Plex Serif",
+    "body": "IBM Plex Sans",
+    "scale": {"xs":13, "sm":16, "md":19, "lg":23, "xl":28, "xxl":33}
+  },
+  "voice": {
+    "rules": [
+      "Name facts and outcomes.",
+      "Lead with reassurance.",
+      "Speak as a trusted guide."
+    ],
+    "do": ["Create a calm, specific next step.", "Acknowledge the learner's context."],
+    "dont": ["Unleash your potential immediately!", "Our revolutionary ecosystem."]
+  }
+}
